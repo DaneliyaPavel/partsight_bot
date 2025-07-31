@@ -1,0 +1,9 @@
+aiogram[fast]~=3.4
+pandas
+pyxlsb
+python-docx
+docxtpl
+docxcompose
+rapidfuzz
+pymorphy2
+stop-words
