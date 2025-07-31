@@ -7,3 +7,11 @@ docxcompose
 rapidfuzz
 pymorphy2
 stop-words
+ruff
+black
+mypy
+pre-commit
+loguru
+pydantic-settings
+pytest
+openpyxl

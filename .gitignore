@@ -1,0 +1,5 @@
+venv/
+output/
+logs/
+*.docx
+.DS_Store
