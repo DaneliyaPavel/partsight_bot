@@ -8,9 +8,10 @@ from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
-BASE_DIR = Path(__file__).resolve().parent  # bot/
-DATA_DIR = BASE_DIR / "data"
-TEMPLATE_DIR = BASE_DIR / "templates"
+ROOT_DIR = Path(__file__).resolve().parent.parent
+BOT_DIR = ROOT_DIR / "bot"
+DATA_DIR = BOT_DIR / "data"
+TEMPLATE_DIR = BOT_DIR / "templates"
 
 
 class Settings(BaseSettings):
