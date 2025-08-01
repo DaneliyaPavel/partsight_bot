@@ -6,12 +6,15 @@ from aiogram.client.bot import DefaultBotProperties
 
 from bot.config import settings
 from bot.handlers import register_all_handlers
+from bot.service.loader import load_catalog
 from bot.utils.logger import setup as setup_logging
 from loguru import logger
 
 
 async def main() -> None:
     setup_logging()
+
+    await load_catalog()
 
     bot = Bot(
         token=settings.BOT_TOKEN,

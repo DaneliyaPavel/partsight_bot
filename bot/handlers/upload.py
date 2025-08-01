@@ -47,11 +47,11 @@ async def handle_any_docx(message: Message, state: FSMContext) -> None:
     tmp_in: Path = Path("/tmp") / message.document.file_name
     file = await message.bot.download(message.document)
     tmp_in.write_bytes(file.read())
-    logger.info("Получен DOCX от %s: %s", message.from_user.id, tmp_in.name)
+    logger.info("Получен DOCX от {}: {}", message.from_user.id, tmp_in.name)
 
     try:
         act_path = await _process_docx(tmp_in)
-        logger.info("Сформирован акт: %s", act_path.name)
+        logger.info("Сформирован акт: {}", act_path.name)
 
         await message.answer_document(
             document=FSInputFile(act_path),
