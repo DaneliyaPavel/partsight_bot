@@ -1,4 +1,4 @@
-from bot.utils.text import normalize
+from bot.service.text import normalize
 
 
 def test_normalize_basic():

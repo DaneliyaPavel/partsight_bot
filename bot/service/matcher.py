@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Set
 
-from bot.utils.text import normalize
+from .text import normalize
 
 
 def can_produce(raw_name: str, catalog_pref: Set[str]) -> bool:

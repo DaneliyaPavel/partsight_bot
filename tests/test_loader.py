@@ -1,5 +1,5 @@
 import pandas as pd
-from bot.catalog import loader
+from bot.service import loader
 from bot.config import settings
 
 

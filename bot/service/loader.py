@@ -8,7 +8,7 @@ from typing import Set
 import pandas as pd
 
 from bot.config import settings
-from bot.utils.text import normalize
+from .text import normalize
 
 _CATALOG: Path = settings.CATALOG_PATH
 
