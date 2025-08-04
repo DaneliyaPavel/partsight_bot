@@ -1,34 +1,49 @@
+# bot/main.py
+from __future__ import annotations
+
 import asyncio
+import logging
+import sys
+from pathlib import Path
 
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
-from aiogram.client.bot import DefaultBotProperties
+from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.client.default import DefaultBotProperties  # ← добавили
 
 from bot.config import settings
 from bot.handlers import register_all_handlers
-from bot.service.loader import load_catalog
-from bot.utils.logger import setup as setup_logging
-from loguru import logger
+
+
+def _setup_logging() -> None:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s | %(levelname)-8s | %(name)s — %(message)s",
+        datefmt="%H:%M:%S",
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+    logging.getLogger("aiohttp.access").setLevel(logging.WARNING)
 
 
 async def main() -> None:
-    setup_logging()
-
-    await load_catalog()
+    _setup_logging()
 
     bot = Bot(
         token=settings.BOT_TOKEN,
         proxy=settings.PROXY_URL,
-        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),  # ← фикс
     )
-    await bot.delete_webhook(drop_pending_updates=True)
 
-    dp = Dispatcher()
+    dp = Dispatcher(storage=MemoryStorage())
     register_all_handlers(dp)
 
-    logger.info("🤖  Bot started (polling)")
+    logging.getLogger(__name__).info("🤖  Bot started (polling)")
     await dp.start_polling(bot)
 
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    Path("output").mkdir(exist_ok=True)
+    try:
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        pass

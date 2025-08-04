@@ -1,3 +1,4 @@
+# bot/handlers/start.py
 from __future__ import annotations
 
 from aiogram import Router, F
@@ -5,7 +6,7 @@ from aiogram.filters import CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 
-from .inline import get_main_keyboard  # ← динамическая клавиатура
+from .inline import get_main_keyboard
 from bot.service.form import FormStates
 
 router = Router()
@@ -16,12 +17,9 @@ router = Router()
 async def cmd_start(msg: Message, state: FSMContext) -> None:
     await state.clear()
     await msg.answer(
-        "Здравствуйте! Этот бот поможет вам:\n\n"
-        "— Проверить позиции из перечня ЗИП\n"
-        "— Сопоставить их с уже произведённой продукцией\n"
-        "— Сформировать акт с результатами\n\n"
-        "Выберите действие ниже:",
-        reply_markup=get_main_keyboard(msg.from_user.id),  # ← передаём id
+        "👋 Привет! Я бот, который помогает проверять перечни ЗИП и формировать акты.\n\n"
+        "Выберите действие:",
+        reply_markup=get_main_keyboard(msg.from_user.id),
     )
 
 
@@ -30,9 +28,8 @@ async def cmd_start(msg: Message, state: FSMContext) -> None:
 async def about_bot(cb: CallbackQuery) -> None:
     await cb.message.answer(
         "📌 <b>О боте</b>\n\n"
-        "Бот анализирует перечни ЗИП (файлы .docx), сопоставляет позиции "
-        "с каталогом произведённой продукции и формирует акт.\n\n"
-        "Для начала работы загрузите документ с перечнем.",
+        "Загрузите .docx с перечнем ЗИП — я сопоставлю позиции с каталогом "
+        "произведённой продукции и отправлю готовый акт.",
         parse_mode="HTML",
     )
 
