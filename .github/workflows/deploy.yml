@@ -34,7 +34,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ~/app/partsight_bot
+            cd ~/partsight_bot
             git pull
             docker compose pull
             docker compose up -d --remove-orphans
