@@ -35,6 +35,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/partsight_bot
-            git pull
-            docker compose pull
-            docker compose up -d --remove-orphans
+            docker-compose down
+            git pull origin main
+            docker-compose build --pull
+            docker-compose up -d --remove-orphans
