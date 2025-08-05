@@ -10,9 +10,11 @@ from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.client.default import DefaultBotProperties  # ← добавили
+from aiohttp import web
 
 from bot.config import settings
 from bot.handlers import register_all_handlers
+from bot.health import create_app
 
 
 def _setup_logging() -> None:
@@ -36,6 +38,12 @@ async def main() -> None:
 
     dp = Dispatcher(storage=MemoryStorage())
     register_all_handlers(dp)
+
+    app = create_app()
+    runner = web.AppRunner(app)
+    await runner.setup()
+    site = web.TCPSite(runner, port=8080)
+    await site.start()
 
     logging.getLogger(__name__).info("🤖  Bot started (polling)")
     await dp.start_polling(bot)
